@@ -206,3 +206,19 @@ BEGIN
     WHERE Categoria.Nome = categoriaNome;
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_VerificarLivrosCategoria(IN categoriaNome VARCHAR(100), OUT possuiLivros BOOLEAN)
+BEGIN
+    SELECT COUNT(*) INTO possuiLivros
+    FROM Livro
+    INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoriaNome;
+    
+    IF possuiLivros = 0 THEN
+        SET possuiLivros = FALSE;
+    ELSE
+        SET possuiLivros = TRUE;
+    END IF;
+END //
+DELIMITER ;
