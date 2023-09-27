@@ -266,3 +266,20 @@ BEGIN
     LIMIT 1;
 END //
 DELIMITER ;
+
+-- 2. Livros por Categoria
+-- Esta stored procedure aceita o nome de uma categoria como parâmetro e retorna todos os livros que pertencem a essa categoria.
+-- Parâmetros de entrada:
+-- - categoriaNome: O nome da categoria pela qual filtrar os livros.
+DELIMITER //
+CREATE PROCEDURE sp_LivrosPorCategoria(IN categoriaNome VARCHAR(100))
+BEGIN
+    -- Esta consulta SQL seleciona os títulos dos livros da categoria especificada.
+    -- Ela usa uma junção interna (INNER JOIN) entre as tabelas Livro e Categoria para encontrar os livros que correspondem à categoria.
+    SELECT Livro.Titulo
+    FROM Livro
+    INNER JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoriaNome;
+    -- A cláusula WHERE filtra os resultados para incluir apenas livros da categoria fornecida como parâmetro.
+END //
+DELIMITER ;
